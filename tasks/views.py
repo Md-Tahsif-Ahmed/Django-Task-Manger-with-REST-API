@@ -45,4 +45,20 @@ class TaskListView(View):
     def get(self, request):
         tasks = Task.objects.filter(user=request.user)
         return render(request, self.template_name, {'tasks': tasks})
+    
+class TaskCreateView(View):
+    template_name = 'task_create.html'
+
+    def get(self, request):
+        form = TaskForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.user = request.user
+            task.save()
+            return redirect('task-list')
+        return render(request, self.template_name, {'form': form})
 
