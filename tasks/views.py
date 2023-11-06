@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import RegistrationForm
+from .forms import RegistrationForm, TaskForm
 from django.contrib.auth.decorators import login_required
 
 from django.views import View
@@ -47,7 +47,7 @@ class TaskListView(View):
         return render(request, self.template_name, {'tasks': tasks})
     
 class TaskCreateView(View):
-    template_name = 'task_create.html'
+    template_name = 'tasks/task_create.html'
 
     def get(self, request):
         form = TaskForm()
@@ -59,6 +59,6 @@ class TaskCreateView(View):
             task = form.save(commit=False)
             task.user = request.user
             task.save()
-            return redirect('task-list')
+            return redirect(reverse('tasks:task_list'))
         return render(request, self.template_name, {'form': form})
 

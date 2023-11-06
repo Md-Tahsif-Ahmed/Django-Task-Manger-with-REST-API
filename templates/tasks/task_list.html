@@ -3,12 +3,24 @@
 {% block title %}Task List{% endblock %}
 
 {% block content %}
-    <h1>Task List</h1>
-    <!-- Display a list of tasks here -->
-    <h3>kkkk</h3>
-    <ul>
+   <div class="max-w-7xl mx-auto">
+    <h1 class="text-5xl text-center font-bold mt-6"  >Task List</h1>
+    <div class="flex items-center justify-between">
+        
+        <a href="{% url 'tasks:create-task' %}"><button class="btn btn-primary">Create Task</button></a>
+        <form method="get">
+            <div class="flex">
+                <input type="text" name="search" placeholder="Search by title" class="input input-bordered w-full max-w-xs" />
+                <button class="btn btn-primary " type="submit">Apply Filters</button>
+            </div>
+        </form>
+     
+   </div>
+    <div class="grid grid-cols-3 gap-2 my-10">
         {% for task in tasks %}
             
+               
+
                 <div class="card w-96 bg-base-100 shadow-xl">
                     <figure><img src={{ task.photos }} alt={{ task.title }} /></figure>
                     <div class="card-body">
@@ -23,15 +35,14 @@
                     </div>
                   </div>
                
-            
         {% endfor %}
-    </ul>
-    <!-- Add links to create, view, update, and delete tasks -->
+    </div>
+
+
+    </div>
+    
    
-    <!-- Add search and filter options if needed -->
-    <form method="get">
-        <input type="text" name="search" placeholder="Search by title">
-        <!-- Add other filters here -->
-        <button type="submit">Apply Filters</button>
-    </form>
+     
+ 
+   
 {% endblock %}
