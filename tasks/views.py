@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -37,6 +37,10 @@ def sign_in(request):
     return render(request, 'tasks_auth/sign_in.html', {'form': form})
 
 
+@login_required
+def sign_out(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('tasks:sign_in'))
 # CRUD operation for task Manager
 # @login_required
 class TaskListView(View):
@@ -62,3 +66,12 @@ class TaskCreateView(View):
             return redirect(reverse('tasks:task_list'))
         return render(request, self.template_name, {'form': form})
 
+class TaskDetailView(View):
+    template_name = 'tasks/task_detail.html'
+
+    def get(self, request, pk):
+        task = Task.objects.get(pk=pk)
+        if task.user == request.user:
+            return render(request, self.template_name, {'task': task})
+        else:
+            return HttpResponse("You don't have permission to view this task.")

@@ -29,7 +29,9 @@
                       <p>{{ task.due_date}}</p>
                       <p>{{ task.priority}}</p>
                       <div class="card-actions justify-end">
-                        <button class="btn btn-primary">Details</button>
+                        <a href="{% url 'tasks:task-detail' pk=task.pk %}">
+                            <button class="btn btn-primary">Details</button>
+                        </a>
                         <button class="btn btn-primary">Delete</button>
                       </div>
                     </div>

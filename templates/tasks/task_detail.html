@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Task Details{% endblock %}
+
+{% block content %}
+    <h1 class="text-5xl font-bold text-center mt-6">Task Details</h1>
+     
+    
+    <!-- Display task photos if available -->
+    {% for photo in task.photos.all %}
+        <img src="{{ photo.image.url }}" alt="Task Photo">
+    {% endfor %}
+    <!-- Add links to edit and delete the task -->
+    <div class="card w-1/2 bg-base-100 shadow-xl mx-auto my-10">
+        <!-- <figure><img src={{ task.photos }} alt={{ task.title }} /></figure> -->
+        <div class="card-body">
+            <h2 class="card-title">{{ task.title }}</h2>
+            <p>Description: {{ task.description }}</p>
+            <p>Due Date: {{ task.due_date }}</p>
+            <p>Priority: {{ task.priority }}</p>
+            <p>Created At: {{ task.created_at }}</p>
+            <p>Last Updated: {{ task.last_updated }}</p>
+             <div class="card-actions justify-end">
+             
+            <button class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </div>
+{% endblock %}
