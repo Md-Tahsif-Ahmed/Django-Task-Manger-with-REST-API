@@ -12,6 +12,7 @@ class Task(models.Model):
     description = models.TextField()
     due_date = models.DateField()
     photos = models.ManyToManyField('Photo', blank=True)
+    # photo = models.ImageField(upload_to='task_photos', blank=True)
     priority = models.CharField(max_length=10, choices=PRIORITIES)
     is_complete = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

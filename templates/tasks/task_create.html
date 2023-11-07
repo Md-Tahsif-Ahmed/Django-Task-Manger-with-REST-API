@@ -1,52 +1,63 @@
-{% extends "base.html" %}
-
-{% block title %}Create Task{% endblock %}
-
-{% block content %}
-  <div class="hero min-h-screen bg-base-200">
-    <div class="hero-content flex-col lg:flex-row-reverse">
-      <div class="text-center lg:text-left">
-        <h1 class="text-5xl font-bold">Create Task</h1>
-      </div>
-      <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-        <form class="card-body" method="post" enctype="multipart/form-data">
-
-          {% csrf_token %}
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Title</span>
-            </label>
-            {{ form.title }}
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Due Date</span>
-            </label>
-            {{ form.due_date }}
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Priority</span>
-            </label>
-            {{ form.priority }}
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Photos</span>
-            </label>
-            <input type="file" name="photos" accept="image/*" class="input input-bordered" />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">Description</span>
-            </label>
-            {{ form.description }}
-          </div>
-          <div class="form-control mt-6">
-            <button class="btn btn-primary">Create Task</button>
-          </div>
-        </form>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="daisy.css"> <!-- Include the Daisy CSS stylesheet -->
+    <title>Create Task</title>
+</head>
+<body>
+    <div class="hero min-h-screen bg-base-200">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+            <div class="text-center lg:text-left">
+                <h1 class="text-5xl font-bold">Create Task</h1>
+                <p class="py-6">Provide details for your task below.</p>
+            </div>
+            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                <form class="card-body" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-control">
+                        <label for="{{ form.title.id_for_label }}" class="label">
+                            <span class="label-text">Title</span>
+                        </label>
+                        {{ form.title }}
+                    </div>
+                    <div class="form-control">
+                        <label for="{{ form.description.id_for_label }}" class="label">
+                            <span class="label-text">Description</span>
+                        </label>
+                        {{ form.description }}
+                    </div>
+                    <div class="form-control">
+                        <label for="{{ form.due_date.id_for_label }}" class="label">
+                            <span class="label-text">Due Date</span>
+                        </label>
+                        {{ form.due_date }}
+                    </div>
+                    <div class="form-control">
+                        <label for="{{ form.priority.id_for_label }}" class="label">
+                            <span class="label-text">Priority</span>
+                        </label>
+                        {{ form.priority }}
+                    </div>
+                    <div class="form-control">
+                        <label for="{{ form.is_complete.id_for_label }}" class="label">
+                            <span class="label-text">Mark as Complete</span>
+                        </label>
+                        {{ form.is_complete }}
+                    </div>
+                    <div class="form-control">
+                        <label for="{{ form.photos.id_for_label }}" class="label">
+                            <span class="label-text">photo</span>
+                        </label>
+                        <input type="file" class="file-input w-full max-w-xs" />
+                    </div>
+                    <div class="form-control mt-6">
+                        <button type="submit" class="btn btn-primary">Create Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-{% endblock %}
+</body>
+</html>

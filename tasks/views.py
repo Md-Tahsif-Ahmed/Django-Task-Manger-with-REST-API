@@ -11,6 +11,15 @@ from django.http import HttpResponse
 from .models import Task
 from django.contrib.auth.models import User
 
+# For API
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Task, Photo
+from .serializers import TaskSerializer, PhotoSerializer
+ 
+ 
+
 def home(request):
     return render(request, 'homepage.html')
 
@@ -136,3 +145,6 @@ class TaskDeleteView(View):
             return redirect(reverse('tasks:task_list'))
         else:
             return HttpResponse("You don't have permission to delete this task.")
+# API Part
+
+ 

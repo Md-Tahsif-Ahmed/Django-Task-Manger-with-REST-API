@@ -16,5 +16,9 @@ class RegistrationForm(UserCreationForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'due_date', 'photos', 'priority', 'is_complete']
+        fields = ['title', 'description', 'due_date', 'priority', 'is_complete']
+class PhotoForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['photos']
 
