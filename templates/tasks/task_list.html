@@ -5,40 +5,53 @@
 {% block content %}
    <div class="max-w-7xl mx-auto">
     <h1 class="text-5xl text-center font-bold mt-6"  >Task List</h1>
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between my-10">
         
         <a href="{% url 'tasks:create-task' %}"><button class="btn btn-primary">Create Task</button></a>
-        <form method="get">
-            <div class="flex">
-                <input type="text" name="search" placeholder="Search by title" class="input input-bordered w-full max-w-xs" />
-                <button class="btn btn-primary " type="submit">Apply Filters</button>
+        
+        <form method="get" action="{% url 'tasks:task_list' %}">
+            <div class="flex items-center justify-between space-x-4">
+                <input type="text" name="q"  placeholder="Search by title or description" class="input input-bordered w-full max-w-xs hover:border-0" />
+            <select name="priority">
+                <option value="" selected>Filter by priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <input  type="checkbox" name="completed" value="true"><p class="pl-1">Completed(yes/No)</p>
+            <button class="btn btn-primary bg-blue-600" type="submit">Search</button>
             </div>
         </form>
      
    </div>
-    <div class="grid grid-cols-3 gap-2 my-10">
-        {% for task in tasks %}
-            
-               
+   <div class="grid grid-cols-3 gap-2 my-10 ">
+    {% for task in tasks %}
+        <div class="card w-96 bg-base-100  shadow-xl">
+            <div class="card-content">
+                {% for photo in task.photos.all %}
+                    <img class="w-full h-32" src="{{ photo.image.url }}" alt="{{ task.title }}" />
+                {% endfor %}
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">{{ task.title }}</h2>
+                <p>{{ task.description }}</p>
+                <p> Due Date: {{ task.due_date }}</p>
+                <p>Mark: {% if task.is_complete %}Completed{% else %}Not Completed{% endif %}</p>
+                <p> Priority: {{ task.priority }}</p>
+                <div class="card-actions justify-end">
+                    <a href="{% url 'tasks:task-detail' pk=task.pk %}">
+                        <button class="btn btn-primary">Details</button>
+                    </a>
+                    <a href="{% url 'tasks:delete-task' pk=task.pk %}">
+                        <button class="btn btn-primary">Delete</button>
+                    </a>
+                </div>
+            </div>
+           
+        </div>
+    {% endfor %}
+</div>
 
-                <div class="card w-96 bg-base-100 shadow-xl">
-                    <figure><img src={{ task.photos }} alt={{ task.title }} /></figure>
-                    <div class="card-body">
-                      <h2 class="card-title">{{ task.title }}</h2>
-                      <p>{{ task.description}}</p>
-                      <p>{{ task.due_date}}</p>
-                      <p>{{ task.priority}}</p>
-                      <div class="card-actions justify-end">
-                        <a href="{% url 'tasks:task-detail' pk=task.pk %}">
-                            <button class="btn btn-primary">Details</button>
-                        </a>
-                        <a href="{% url 'tasks:delete-task' pk=task.pk %}"><button class="btn btn-primary">Delete</button></a>
-                      </div>
-                    </div>
-                  </div>
-               
-        {% endfor %}
-    </div>
 
 
     </div>

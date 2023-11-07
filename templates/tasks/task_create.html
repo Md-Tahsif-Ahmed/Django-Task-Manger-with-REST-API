@@ -3,42 +3,50 @@
 {% block title %}Create Task{% endblock %}
 
 {% block content %}
-    <h1 class="text-5xl font-bold mb-4 text-center m-10">Create Task</h1>
-    <!-- Task creation form goes here -->
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <!-- Add form fields for title, description, due date, priority, and photos -->
-        <div class="p-4 bg-gray-400 shadow rounded-lg text-center w-1/2 mx-auto">
-            <div class="flex justify-center items-center">
-                <div class="mb-4 mx-4">
-                    <label for="title" class="block text-gray-600 text-sm font-medium mb-2">Title</label>
-                    {{ form.title }}
-                </div>
-                <div class="mb-4 mx-4">
-                    <label for="due_date" class="block text-gray-600 text-sm font-medium mb-2">Due Date</label>
-                    {{ form.due_date }}
-                </div>
-            </div>
+  <div class="hero min-h-screen bg-base-200">
+    <div class="hero-content flex-col lg:flex-row-reverse">
+      <div class="text-center lg:text-left">
+        <h1 class="text-5xl font-bold">Create Task</h1>
+      </div>
+      <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <form class="card-body" method="post" enctype="multipart/form-data">
 
-            <div class="flex justify-center items-center">
-                <div class="mb-4 mx-4">
-                    <label for="priority" class="block text-gray-600 text-sm font-medium mb-2">Priority</label>
-                    {{ form.priority }}
-                </div>
-                <!-- Add a field for uploading photos if needed -->
-                <div class="mb-4 mx-4">
-                    <label for="photos" class="block text-gray-600 text-sm font-medium mb-2">Photos</label>
-                    <input type="file" name="photos" accept="image/*">
-                </div>
-            </div>
-            
-            <div class="mb-4">
-                <label for="description" class="block text-gray-600 text-sm font-medium mb-2">Description</label>
-                {{ form.description }}
-            </div>
-            
-            <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-4 py-2 rounded-full">Create Task</button>
-        </div>
-    </form>
-</div>
+          {% csrf_token %}
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Title</span>
+            </label>
+            {{ form.title }}
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Due Date</span>
+            </label>
+            {{ form.due_date }}
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Priority</span>
+            </label>
+            {{ form.priority }}
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Photos</span>
+            </label>
+            <input type="file" name="photos" accept="image/*" class="input input-bordered" />
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Description</span>
+            </label>
+            {{ form.description }}
+          </div>
+          <div class="form-control mt-6">
+            <button class="btn btn-primary">Create Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

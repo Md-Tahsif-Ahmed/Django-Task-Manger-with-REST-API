@@ -11,6 +11,9 @@ from django.http import HttpResponse
 from .models import Task
 from django.contrib.auth.models import User
 
+def home(request):
+    return render(request, 'homepage.html')
+
 # User Authentication part
 def sign_up(request):
     form = RegistrationForm()
@@ -44,13 +47,28 @@ def sign_out(request):
     return HttpResponseRedirect(reverse('tasks:sign_in'))
 # CRUD operation for task Manager
 # @login_required
+ 
 class TaskListView(View):
     template_name = 'tasks/task_list.html'
 
     def get(self, request):
         tasks = Task.objects.filter(user=request.user)
+
+        # Get query parameters from the URL
+        query = request.GET.get('q')
+        filter_priority = request.GET.get('priority')
+        filter_completed = request.GET.get('completed')
+
+        # Apply filters and search
+        if query:
+            tasks = tasks.filter(title__icontains=query) | tasks.filter(description__icontains=query)
+        if filter_priority:
+            tasks = tasks.filter(priority=filter_priority)
+        if filter_completed:
+            tasks = tasks.filter(is_complete=True if filter_completed == 'true' else False)
+
         return render(request, self.template_name, {'tasks': tasks})
-    
+
 class TaskCreateView(View):
     template_name = 'tasks/task_create.html'
 
@@ -59,7 +77,7 @@ class TaskCreateView(View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        form = TaskForm(request.POST)
+        form = TaskForm(request.POST, request.FILES)
         if form.is_valid():
             task = form.save(commit=False)
             task.user = request.user

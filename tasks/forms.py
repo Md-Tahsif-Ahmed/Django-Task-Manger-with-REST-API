@@ -18,7 +18,3 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['title', 'description', 'due_date', 'photos', 'priority', 'is_complete']
 
-    def __init__(self, *args, **kwargs):
-        super(TaskForm, self).__init__(*args, **kwargs)
-        # Customize form widget attributes, labels, and placeholders if needed
-        self.fields['due_date'].widget.attrs.update({'class': 'datepicker'})
