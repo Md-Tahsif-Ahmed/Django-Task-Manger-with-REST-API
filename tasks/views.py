@@ -75,3 +75,25 @@ class TaskDetailView(View):
             return render(request, self.template_name, {'task': task})
         else:
             return HttpResponse("You don't have permission to view this task.")
+
+class TaskUpdateView(View):
+    template_name = 'tasks/task_update.html'
+
+    def get(self, request, pk):
+        task = Task.objects.get(pk=pk)
+        if task.user == request.user:
+            form = TaskForm(instance=task)
+            return render(request, self.template_name, {'form': form, 'task': task})
+        else:
+            return HttpResponse("You don't have permission to edit this task.")
+
+    def post(self, request, pk):
+        task = Task.objects.get(pk=pk)
+        if task.user == request.user:
+            form = TaskForm(request.POST, instance=task)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse('tasks:task_list'))  # Redirect to the task list page
+            return render(request, self.template_name, {'form': form, 'task': task})
+        else:
+            return HttpResponse("You don't have permission to edit this task.")
