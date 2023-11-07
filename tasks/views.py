@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
+from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -97,3 +98,23 @@ class TaskUpdateView(View):
             return render(request, self.template_name, {'form': form, 'task': task})
         else:
             return HttpResponse("You don't have permission to edit this task.")
+
+
+
+class TaskDeleteView(View):
+    template_name = 'tasks/task_delete.html'
+
+    def get(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        if task.user == request.user:
+            return render(request, self.template_name, {'task': task})
+        else:
+            return HttpResponse("You don't have permission to delete this task.")
+
+    def post(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        if task.user == request.user:
+            task.delete()
+            return redirect(reverse('tasks:task_list'))
+        else:
+            return HttpResponse("You don't have permission to delete this task.")
