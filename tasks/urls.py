@@ -4,7 +4,7 @@ from . import views
 app_name = "tasks"
 
 urlpatterns = [
-     path('', views.home, name='home'),
+    path('', views.home, name='home'),
     path('signup/', views.sign_up, name='sign_up'),
     path('signin/', views.sign_in, name='sign_in'),
     path('signout/', views.sign_out, name='sign_out'),
@@ -13,6 +13,9 @@ urlpatterns = [
     path('detail/<pk>/', views.TaskDetailView.as_view(), name='task-detail'),
     path('update/<pk>/', views.TaskUpdateView.as_view(), name='update-task'),
     path('delete/<pk>', views.TaskDeleteView.as_view(), name='delete-task'),
+    # API Routes
+    path('tasks/', views.TaskList.as_view(), name='api-list'),
+    path('tasks/<int:pk>/', views.TaskDetail.as_view(), name='api-detail'),
 ]
 
 
