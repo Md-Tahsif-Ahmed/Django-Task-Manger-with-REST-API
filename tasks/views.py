@@ -53,7 +53,7 @@ def sign_in(request):
 @login_required
 def sign_out(request):
     logout(request)
-    return HttpResponseRedirect(reverse('tasks:sign_in'))
+    return render(request, 'homepage.html')
 # CRUD operation for task Manager
 # @login_required
  
